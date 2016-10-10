@@ -1,0 +1,13 @@
+{
+	"title": "SINGLE PAGE APPLICATION",
+	"items": [
+		{
+			"href": "https://vk.com",
+			"anchor": "vk.com"
+		},
+		{
+			"href": "https://mail.ru",
+			"anchor": "mail.ru"
+		}
+	]
+}
