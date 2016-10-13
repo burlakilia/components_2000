@@ -13,9 +13,7 @@
 
 	let menu = new Menu({
 		el: document.querySelector('.js-menu'),
-		onPick (item) {
-			console.log(item);
-		},
+		onPick (item) {},
 		onRemove () {}
 	});
 
@@ -30,13 +28,18 @@
 	});
 
 	form.on('add', event => {
-		menu.addItem(event.detail);
-		menuModel.setData(menu.getData());
+		let data = menuModel.getData();
+		data.items.push(event.detail);
+		menuModel.setData(data);
+
 		menuModel.save();
 	});
 
-	menuModel.fetch();
 
+	form.disable();
+	menuModel.fetch().then(() => {
+		form.enable();
+	});
 
 
 	//TODO: Сделать компоненту для нотификации о версии приложения

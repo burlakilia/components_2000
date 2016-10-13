@@ -45,6 +45,18 @@
 		}
 
 
+		disable () {
+			this.el.style.opacity = 0.5;
+			this.el.querySelector('button[type="submit"]').disabled = true;
+		}
+
+
+		enable () {
+			this.el.style.opacity = null;
+			this.el.querySelector('button[type="submit"]').disabled = false;
+		}
+
+
 		/**
 		 * Получение элемента формы по имени
 		 * @param  {string} name

@@ -19,10 +19,15 @@
 		}
 
 		fetch () {
-			this._makeRequset('GET', this.resource, this._onFetch.bind(this));
+			console.time('_makeRequset');
+
+			return new Promise((resolve, reject) => {
+				this._makeRequset('GET', this.resource, resolve);
+			}).then(this._onFetch.bind(this));
 		}
 
 		save () {
+			console.time('_makeRequset');
 			this._makeRequset('PUT', this.resource, this._onSave.bind(this));
 		}
 
@@ -62,6 +67,7 @@
 					let data = JSON.parse(xhr.responseText);
 
 					callback(data, xhr);
+					console.timeEnd('_makeRequset');
 				}
 			}
 
