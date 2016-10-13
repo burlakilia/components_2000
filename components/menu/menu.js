@@ -26,6 +26,10 @@
 			this.data = data;
 		}
 
+		getData () {
+			return this.data;
+		}
+
 		/**
 		 * Добавляем элемент меню
 		 * @param {Object} item

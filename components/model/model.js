@@ -19,7 +19,11 @@
 		}
 
 		fetch () {
-			this._makeRequset('GET', this.resource);
+			this._makeRequset('GET', this.resource, this._onFetch.bind(this));
+		}
+
+		save () {
+			this._makeRequset('PUT', this.resource, this._onSave.bind(this));
 		}
 
 		on (name, callback) {
@@ -37,7 +41,16 @@
 			
 		}
 
-		_makeRequset (method, resource) {
+		_onFetch (data, xhr) {
+			this.trigger('fetch', xhr);
+			this.setData(data);
+		}
+
+		_onSave (data, xhr) {
+			this.trigger('save');
+		}
+
+		_makeRequset (method, resource, callback) {
 			let xhr = new XMLHttpRequest();
 			xhr.open(method, resource, true);
 			xhr.onreadystatechange = () => {
@@ -48,12 +61,17 @@
 				if (xhr.status === 200) {
 					let data = JSON.parse(xhr.responseText);
 
-					this.trigger('fetch', xhr);
-					this.setData(data);
+					callback(data, xhr);
 				}
 			}
 
-			xhr.send();
+			let data = null;
+
+			if (method === 'PUT') {
+				data = JSON.stringify(this.getData());
+			}
+
+			xhr.send(data);
 		}
 	}
 
