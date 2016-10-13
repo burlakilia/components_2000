@@ -1,61 +1,56 @@
-(function () {
- 	'use strict';
+//import
+import {Menu} from '../menu/menu';
+import {Form} from  '../form/form';
+import {Model} from '../model/model';
 
-	//import
-	let Menu = window.Menu;
-	let Form = window.Form;
-	let Model = window.Model;
+let menuModel = new Model({
+	resource: 'https://javascriptru.firebaseio.com/menu/-KTz9cChFTqkGB2togiq.json',
+	data: {}
+});
 
-	let menuModel = new Model({
-		resource: 'https://javascriptru.firebaseio.com/menu/-KTz9cChFTqkGB2togiq.json',
-		data: {}
-	});
+let menu = new Menu({
+	el: document.querySelector('.js-menu'),
+	onPick (item = '') {},
+	onRemove () {}
+});
 
-	let menu = new Menu({
-		el: document.querySelector('.js-menu'),
-		onPick (item) {},
-		onRemove () {}
-	});
-
-	menuModel.on('update', data => {
-		menu.setData(data);
-		menu.render();
-	});
+menuModel.on('update', data => {
+	menu.setData(data);
+	menu.render();
+});
 
 
-	let form = new Form({
-		el: document.querySelector('.js-form')
-	});
+let form = new Form({
+	el: document.querySelector('.js-form')
+});
 
-	form.on('add', event => {
-		let data = menuModel.getData();
-		data.items.push(event.detail);
-		menuModel.setData(data);
+form.on('add', event => {
+	let data = menuModel.getData();
+	data.items.push(event.detail);
+	menuModel.setData(data);
 
-		menuModel.save();
-	});
-
-
-	form.disable();
-	menuModel.fetch().then(() => {
-		form.enable();
-	});
+	menuModel.save();
+});
 
 
-	//TODO: Сделать компоненту для нотификации о версии приложения
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', '/package.json', true);
-	
-	xhr.onreadystatechange = function (event) {
-		if (xhr.readyState !== 4) {
-			return;
-		}
+form.disable();
+menuModel.fetch().then(() => {
+	form.enable();
+});
 
-		if (xhr.status === 200) {
-			console.log('App vesrion is: ', JSON.parse(xhr.responseText).version);
-		}
+
+//TODO: Сделать компоненту для нотификации о версии приложения
+let xhr = new XMLHttpRequest();
+xhr.open('GET', '/package.json', true);
+
+xhr.onreadystatechange = function (event) {
+	if (xhr.readyState !== 4) {
+		return;
 	}
 
-	xhr.send();
+	if (xhr.status === 200) {
+		console.log('App vesrion is: ', JSON.parse(xhr.responseText).version);
+	}
+}
 
-})();
+xhr.send();

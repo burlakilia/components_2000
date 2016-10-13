@@ -22,6 +22,10 @@
   },
   "homepage": "https://github.com/iketari/components_0800#readme",
   "devDependencies": {
-    "fest": "^0.12.1"
+    "fest": "^0.12.1",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-preset-es2015": "^6.9.0"
   }
 }
