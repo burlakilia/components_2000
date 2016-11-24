@@ -7,7 +7,7 @@
 	let Model = window.Model;
 
 	let menuModel = new Model({
-		resource: '/data/menu.json',
+		resource: './data/menu.json',
 		data: {}
 	});
 
@@ -39,8 +39,8 @@
 
 	//TODO: Сделать компоненту для нотификации о версии приложения
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', '/package.json', true);
-	
+	xhr.open('GET', './package.json', true);
+
 	xhr.onreadystatechange = function (event) {
 		if (xhr.readyState !== 4) {
 			return;
